@@ -16,7 +16,8 @@ export class Top20Component implements OnInit, OnDestroy {
   loadingMessage = '';
   trailer: any;
   trailers = Array<TrailerDataModel>(0);
-  movies = Array<MovieDataModel>(0);
+  moviesAll = Array<MovieDataModel>(0);
+  moviesTop20 = Array<MovieDataModel>(0);
   alive = true;
 
   constructor(private filmBackendService: FilmBackendService) { }
@@ -42,17 +43,18 @@ export class Top20Component implements OnInit, OnDestroy {
           this.loading = false;
           this.loadingMessage = '';
           console.log(res);
-          const _movies = (<Array<MovieDataModel>>res.data.movies).filter((movie) => {
+          this.moviesAll = <Array<MovieDataModel>>res.data.movies;
+          const _moviesTop20 = this.moviesAll.filter((movie) => {
             return movie.ranking < 21;
           });
-          _movies.forEach((movie) => {
+          _moviesTop20.forEach((movie) => {
             movie.directors.forEach((director) => {
               director.sanitizeDirectorUrl = 'https://www.imdb.com/find?q=' + director.name.split(' ').join('%20') + '&s=nm&ref_=fn_nm';
             });
           });
-          this.movies = _movies;
-          console.log(this.movies);
-          this.getTrailerOfFilmFunction(this.movies['0'].title.split(' ').join('%20'));
+          this.moviesTop20 = _moviesTop20;
+          console.log(this.moviesTop20);
+          this.getTrailerOfFilmFunction(this.moviesTop20['0'].title.split(' ').join('%20'));
         },
         (res: any) => {
           this.loading = false;
@@ -63,25 +65,20 @@ export class Top20Component implements OnInit, OnDestroy {
       );
   }
 
-  public getTrailerOfFilmFunction(title: any) {
-    // this.loading = true;
-    // this.errorMessage = '';
-    // this.loadingMessage = 'Please wait, data loading...';
+  public getTrailerOfFilmFunction(title: any): TrailerDataModel {
     this.filmBackendService.getTrailerOfFilm(title)
       .takeWhile(() => this.alive)
       .subscribe(
         (res: any) => {
-          // this.loading = false;
-          // this.loadingMessage = '';
-          console.log(res);
-          // this.movies = _movies;
-          // console.log(this.movies);
+          const trailer = (res.data && res.data.movies && res.data.movies['0'].trailer)
+                          ? (<TrailerDataModel>res.data.movies['0'].trailer)
+                          : new TrailerDataModel(undefined, undefined, [], undefined, undefined);
+          console.log(trailer);
+          return trailer;
         },
         (res: any) => {
-          // this.loading = false;
-          // this.loadingMessage = '';
-          // this.errorMessage = 'There are server problems... ' + res.message;
           console.log(res);
+          return new TrailerDataModel(undefined, undefined, [], undefined, undefined);
         }
       );
   }

@@ -1,3 +1,5 @@
+import {TrailerDataModel} from './trailer-data.model';
+
 export class MovieDataModel {
   countries: Array<string>;
   directors: Array<{name: string, id: string, sanitizeDirectorUrl: string}>;
@@ -20,6 +22,7 @@ export class MovieDataModel {
   votes: string;
   writers: Array<{name: string, id: string}>;
   year: string;
+  trailer: TrailerDataModel;
 
   constructor(countries: Array<string>,
               directors: Array<{name: string, id: string, sanitizeDirectorUrl: string}>,
@@ -41,7 +44,8 @@ export class MovieDataModel {
               urlPoster: string,
               votes: string,
               writers: Array<{name: string, id: string}>,
-              year: string) {
+              year: string,
+              trailer: TrailerDataModel) {
 
     this.countries = countries;
     this.directors = directors;
@@ -64,5 +68,6 @@ export class MovieDataModel {
     this.votes = votes;
     this.writers = writers;
     this.year = year;
+    this.trailer = trailer;
   }
 }

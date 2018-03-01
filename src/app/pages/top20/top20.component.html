@@ -7,7 +7,7 @@
 </ngb-alert>
 
 <div class="table-responsive">
-  <table class="table table-striped" *ngIf="movies && movies.length">
+  <table class="table table-striped" *ngIf="moviesTop20 && moviesTop20.length">
     <thead>
       <tr>
         <th class="text-center" colspan="3">Name</th>
@@ -24,7 +24,7 @@
     <!--постер, название, год, рейтинг, жанр, страна, режиссер (при клике на имя происходит переход на страничку режиссера на сайте imdb.com)-->
     <!-- - для каждого фильма выводятся кнопки при нажатии на которые открывается поп-ап с трейлером фильма (если есть трейлер в нескольких качествах нужно выводить несколько кнопок)-->
     <!-- - пользователь может отметить каждый фильм как избранный и это должно сохранится в локальном хранилище и в списке фильмов должна быть видна эта отметка-->
-      <tr *ngFor="let movie of movies; let i='index'">
+      <tr *ngFor="let movie of moviesTop20; let i='index'">
         <td class="text-center">{{i+1}}</td>
         <td style="padding-top: 0.1rem; padding-bottom: 0.1rem">
           <img [attr.id]="'myimg_'+i" [attr.src]=movie.urlPoster>
