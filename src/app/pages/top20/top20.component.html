@@ -1,0 +1,57 @@
+<img *ngIf="loading" style="position: fixed; top: 48%; left: 48%" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+<ngb-alert *ngIf="errorMessage" type="danger" (close)="closeAlert()">{{ errorMessage }}</ngb-alert>
+<ngb-alert *ngIf="loadingMessage" type="success"  [dismissible]="false">{{ loadingMessage }}</ngb-alert>
+<ngb-alert *ngIf="!(errorMessage || loadingMessage)" type="light"  [dismissible]="false">
+  <h3 style="color: #000000 !important">Top 20 movies:</h3>
+</ngb-alert>
+
+<div class="table-responsive">
+  <table class="table table-striped" *ngIf="movies && movies.length">
+    <thead>
+      <tr>
+        <th class="text-center" colspan="3">Name</th>
+        <th class="text-center">Year</th>
+        <th class="text-center">Rating</th>
+        <th class="text-center">Genres</th>
+        <th class="text-center">Country</th>
+        <th class="text-center">Director</th>
+        <th class="text-center">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!--в списке лучших фильмов выводятся фильмы со следующей информацией: -->
+    <!--постер, название, год, рейтинг, жанр, страна, режиссер (при клике на имя происходит переход на страничку режиссера на сайте imdb.com)-->
+    <!-- - для каждого фильма выводятся кнопки при нажатии на которые открывается поп-ап с трейлером фильма (если есть трейлер в нескольких качествах нужно выводить несколько кнопок)-->
+    <!-- - пользователь может отметить каждый фильм как избранный и это должно сохранится в локальном хранилище и в списке фильмов должна быть видна эта отметка-->
+      <tr *ngFor="let movie of movies; let i='index'">
+        <td class="text-center">{{i+1}}</td>
+        <td style="padding-top: 0.1rem; padding-bottom: 0.1rem">
+          <img [attr.id]="'myimg_'+i" [attr.src]=movie.urlPoster>
+        </td>
+        <td class="text-left">{{movie.title}}</td>
+        <td class="text-center">{{movie.year}}</td>
+        <td class="text-center">{{movie.rating}}</td>
+        <td class="text-center">
+          {{movie.genres | displayArrayAsStringWithComa}}
+        </td>
+        <td class="text-center">
+          {{movie.countries | displayArrayAsStringWithComa}}
+        </td>
+        <td class="text-center">
+          <ng-container *ngFor="let director of movie.directors">
+            <a class="director" href="javascript:void(0);" (click)="openInNewWindow(director.sanitizeDirectorUrl)">
+              <!--[href]="openInNewWindow(director.sanitizeDirectorUrl)"-->
+              {{director.name}}
+            </a>
+          </ng-container>
+        </td>
+        <td class="text-center"></td>
+        <!--<td>-->
+          <!--<div [innerHTML]="film.embed"></div>-->
+        <!--</td>-->
+      </tr>
+    </tbody>
+  </table>
+
+</div>
