@@ -21,6 +21,7 @@ export class Top20Component implements OnInit, OnDestroy {
   trailers = Array<{ 'idIMDB': string, 'trailer': TrailerDataModel }>(0);
   moviesAll = Array<MovieDataModel>(0);
   moviesTop20 = Array<MovieDataModel>(0);
+  moviesTop20_length = 2;
   titles_moviesTop20 = Array<string>(0);
   alive = true;
 
@@ -29,8 +30,20 @@ export class Top20Component implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!(this.commonDataService.moviesTop20 && this.commonDataService.moviesTop20.length)) {
+    if (!(this.commonDataService.moviesTop20 && this.commonDataService.moviesTop20.length
+        && this.commonDataService.moviesAll && this.commonDataService.moviesAll.length
+        && this.commonDataService.titles_moviesTop20 && this.commonDataService.titles_moviesTop20.length)) {
       this.getListOfMoviesFunction();
+    } else {
+      this.moviesTop20 = this.commonDataService.moviesTop20;
+      this.moviesAll = this.commonDataService.moviesAll;
+      this.titles_moviesTop20 = this.commonDataService.titles_moviesTop20;
+    }
+    if (!(this.commonDataService.titles_moviesTop20 && this.commonDataService.trailers
+        && this.commonDataService.titles_moviesTop20.length === this.commonDataService.trailers.length)) {
+      this.loadTrailers(this.titles_moviesTop20);
+    } else {
+      this.trailers = this.commonDataService.trailers;
     }
   }
 
@@ -51,8 +64,10 @@ export class Top20Component implements OnInit, OnDestroy {
           this.loadingMessage = '';
           console.log(res);
           this.moviesAll = <Array<MovieDataModel>>res.data.movies;
+          this.commonDataService.moviesAll = <Array<MovieDataModel>>res.data.movies;
+
           const _moviesTop20 = this.moviesAll.filter((movie) => {
-              return movie.ranking < 2;
+              return movie.ranking <= this.moviesTop20_length;
           });
           _moviesTop20.forEach((movie) => {
               movie.directors.forEach((director) => {
@@ -65,6 +80,7 @@ export class Top20Component implements OnInit, OnDestroy {
           this.moviesTop20.forEach((movie) => {
               this.titles_moviesTop20.push(movie.title.split(' ').join('%20'));
           });
+          this.commonDataService.titles_moviesTop20 = this.titles_moviesTop20;
           console.log(this.titles_moviesTop20);
 
           this.loadTrailers(this.titles_moviesTop20);
@@ -94,6 +110,7 @@ export class Top20Component implements OnInit, OnDestroy {
         // trailer: result.trailer.data.movies['0']
       }
     });
+    this.commonDataService.trailers = this.trailers;
     console.log(this.trailers);
   }
 

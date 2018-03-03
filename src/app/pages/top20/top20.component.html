@@ -49,7 +49,6 @@
         <td class="text-center" style="max-width: 10%">
           <ng-container *ngFor="let director of movie.directors">
             <a class="director" href="javascript:void(0);" (click)="openInNewWindow(director.sanitizeDirectorUrl)">
-              <!--[href]="openInNewWindow(director.sanitizeDirectorUrl)"-->
               {{director.name}}
             </a>
           </ng-container>
