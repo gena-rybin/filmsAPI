@@ -8,6 +8,7 @@ import {FilmRoutingModule} from '../services/film-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TransformNameAsQueryParamPipe} from '../pipes/transform-name-as-query-param.pipe';
 import {DisplayArrayAsStringPipe} from '../pipes/display-array-as-string.pipe';
+import {ComponentsModule} from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {DisplayArrayAsStringPipe} from '../pipes/display-array-as-string.pipe';
     CommonModule,
     FormsModule,
     FilmRoutingModule,
-    NgbModule
+    NgbModule,
+    ComponentsModule
   ],
   exports: [
     AppComponent,

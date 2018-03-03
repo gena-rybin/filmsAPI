@@ -49,7 +49,7 @@ export class Top20Component implements OnInit, OnDestroy {
           console.log(res);
           this.moviesAll = <Array<MovieDataModel>>res.data.movies;
           const _moviesTop20 = this.moviesAll.filter((movie) => {
-              return movie.ranking < 21;
+              return movie.ranking < 4;
           });
           _moviesTop20.forEach((movie) => {
               movie.directors.forEach((director) => {
@@ -85,8 +85,9 @@ export class Top20Component implements OnInit, OnDestroy {
       if (result.data && result.data.movies && result.data.movies['0'].trailer) {
         this.trailers.push({
           idIMDB: this.moviesTop20[i].idIMDB,
-          trailer: result
+          trailer: result.data.movies['0'].trailer
         });
+        // trailer: result.trailer.data.movies['0']
       }
     });
     console.log(this.trailers);

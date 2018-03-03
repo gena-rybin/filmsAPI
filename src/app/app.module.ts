@@ -8,6 +8,7 @@ import {AppComponent} from './pages/index-page/app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FilmBackendService} from './services/film-backend.service';
 import {FilmJsonpService} from './services/film-jsonp.service';
+import { ModalVideoComponent } from './components/modal-video/modal-video.component';
 
 @NgModule({
   declarations: [],
