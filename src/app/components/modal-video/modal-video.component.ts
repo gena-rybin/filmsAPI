@@ -9,13 +9,12 @@ import {TrailerDataModel} from '../../models/trailer-data.model';
 })
 export class ModalVideoComponent implements OnInit {
   closeResult: string;
-  _trailer: Array<any>;
-  trailer_qualities = [];
+  _trailer: TrailerDataModel;
+  videoURL: string;
   @Input() filmName: string;
-  @Input() set trailer(data: Array<any>) {
-    console.log(data);
+  @Input() set trailer(data: TrailerDataModel) {
     this._trailer = data;
-
+    console.log(this._trailer);
   }
 
   constructor(private modalService: NgbModal) {}
@@ -24,11 +23,17 @@ export class ModalVideoComponent implements OnInit {
   }
 
   open(content) {
+
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  setVideoUrl(i: number) {
+    this.videoURL = this._trailer.qualities[i].videoURL;
+    console.log(i);
   }
 
   private getDismissReason(reason: any): string {
@@ -40,6 +45,5 @@ export class ModalVideoComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-
 
 }

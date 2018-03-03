@@ -7,18 +7,12 @@
   </div>
   <div class="modal-body">
     {{_trailer.description}}
-    <br>
+    <br><br>
+    <iframe width="100%" height="300" [src]="videoURL | safeVideo"></iframe>
   </div>
-  <!--<div class="modal-footer">-->
-    <!--<button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>-->
-  <!--</div>-->
 </ng-template>
 
-<!--{{_trailer | json}}-->
-<ng-container *ngFor="let trailer of _trailer.qualities">
-  <button class="btn btn-sm btn-outline-primary" (click)="open(content)">{{trailer.quality}}</button>
+<ng-container *ngFor="let trailer of _trailer.qualities; let i='index'">
+  <button class="btn btn-sm btn-outline-primary" (click)="open(content); setVideoUrl(i)">{{trailer.quality}}</button>
   <br>
 </ng-container>
-<!--<hr>-->
-
-<!--<pre>{{closeResult}}</pre>-->

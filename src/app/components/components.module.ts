@@ -4,10 +4,12 @@ import {FormsModule} from '@angular/forms';
 import {FilmRoutingModule} from '../services/film-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ModalVideoComponent} from './modal-video/modal-video.component';
+import {SafeVideoPipe} from '../pipes/safe-video.pipe';
 
 @NgModule({
   declarations: [
-    ModalVideoComponent
+    ModalVideoComponent,
+    SafeVideoPipe
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import {ModalVideoComponent} from './modal-video/modal-video.component';
     NgbModule
   ],
   exports: [
-    ModalVideoComponent
+    ModalVideoComponent,
+    SafeVideoPipe
   ],
   providers: [],
   bootstrap: []

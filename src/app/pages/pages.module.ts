@@ -16,7 +16,8 @@ import {ComponentsModule} from '../components/components.module';
     Top20Component,
     AboutComponent,
     DisplayArrayAsStringPipe,
-    TransformNameAsQueryParamPipe
+    TransformNameAsQueryParamPipe,
+
   ],
   imports: [
     CommonModule,
@@ -30,7 +31,8 @@ import {ComponentsModule} from '../components/components.module';
     Top20Component,
     AboutComponent,
     DisplayArrayAsStringPipe,
-    TransformNameAsQueryParamPipe
+    TransformNameAsQueryParamPipe,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

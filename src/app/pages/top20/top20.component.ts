@@ -49,7 +49,7 @@ export class Top20Component implements OnInit, OnDestroy {
           console.log(res);
           this.moviesAll = <Array<MovieDataModel>>res.data.movies;
           const _moviesTop20 = this.moviesAll.filter((movie) => {
-              return movie.ranking < 4;
+              return movie.ranking < 2;
           });
           _moviesTop20.forEach((movie) => {
               movie.directors.forEach((director) => {
