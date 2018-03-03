@@ -17,3 +17,6 @@ div.panel-options{
 .director:hover {
   color: darkorange;
 }
+ngb-alert {
+  white-space: normal;
+}

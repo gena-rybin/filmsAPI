@@ -15,6 +15,7 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
   errorMessage = '';
   loadingMessage = '';
   chart = [];
+  chartData = [];
   moviesTop20 = Array<MovieDataModel>(0);
   moviesAll = Array<MovieDataModel>(0);
   titles_moviesTop20 = Array<string>(0);
@@ -25,12 +26,13 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
               private filmBackendService: FilmBackendService) { }
 
   ngOnInit() {
-    if (this.commonDataService.moviesTop20.length) {
-      this.moviesTop20 = this.commonDataService.moviesTop20;
-      console.log(this.moviesTop20);
-    } else {
-      this.getListOfMoviesFunction();
-    }
+    // if (this.commonDataService.moviesTop20.length) {
+    //   this.moviesTop20 = this.commonDataService.moviesTop20;
+    //   console.log(this.moviesTop20);
+    // } else {
+    //   this.getListOfMoviesFunction();
+    // }
+    this.prepareChartData([]);
   }
 
   ngAfterViewInit() {
@@ -94,7 +96,6 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.loading = false;
           this.loadingMessage = '';
-          // console.log(res);
           this.moviesAll = (res.data && <Array<MovieDataModel>>res.data.movies) ? <Array<MovieDataModel>>res.data.movies : undefined;
           this.commonDataService.moviesAll = this.moviesAll;
 
@@ -108,12 +109,13 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
           });
           this.moviesTop20 = _moviesTop20;
           this.commonDataService.moviesTop20 = this.moviesTop20;
-          // console.log(this.moviesTop20);
+
           this.moviesTop20.forEach((movie) => {
             this.titles_moviesTop20.push(movie.title.split(' ').join('%20'));
           });
           this.commonDataService.titles_moviesTop20 = this.titles_moviesTop20;
-          // console.log(this.titles_moviesTop20);
+
+          this.prepareChartData(this.commonDataService.moviesTop20);
         },
         (res: any) => {
           this.loading = false;
@@ -121,6 +123,40 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.errorMessage = 'There are server problems... ' + res.message;
           console.log(res);
         });
+  }
+
+  public prepareChartData(moviesTop20: Array<any>) {
+    // const years = [];
+
+    // moviesTop20.forEach((movie) => {
+    //   years.push(+movie.year);
+    // });
+    // years.sort((first, second) => {
+    //   return first - second;
+    // });
+    const years = [1934, 1957, 1966, 1972, 1974, 1975, 1977, 1980, 1990, 1993, 1994, 1994, 1994, 1999, 1999, 2001, 2002, 2003, 2008, 2010];
+    const yMin = years['0'];
+    const yMax = years[years.length - 1];
+    const periodsStart = (Math.floor(yMin / 10)) * 10;
+    const periodsEnd = ((Math.floor((yMax) / 10 ) + 1) * 10);
+    const length = (periodsEnd - periodsStart) / 10;
+    const chartData = [];
+    let currentPeriodStart = periodsStart;
+    let currentPeriodEnd = periodsStart + 9;
+    for (let i = 0; i < length; i++) {
+      const validYears = years.filter((year) => (year >= currentPeriodStart && year <= currentPeriodEnd));
+      const period = '' + currentPeriodStart + '-' + currentPeriodEnd;
+      chartData.push({
+        period: period,
+        filmsCount: validYears.length
+      });
+      currentPeriodStart += 10;
+      currentPeriodEnd += 10;
+    }
+    this.chartData = chartData;
+    console.log(years);
+    console.log(periodsStart, yMin, yMax, periodsEnd);
+    console.log(this.chartData);
   }
 
   public closeAlert() {
