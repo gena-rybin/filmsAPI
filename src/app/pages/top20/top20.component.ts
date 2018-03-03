@@ -7,6 +7,7 @@ import {MovieDataModel} from '../../models/movie-data.model';
 import {toPromise} from 'rxjs/operator/toPromise';
 import {async} from '@angular/core/testing';
 import {CommonDataService} from '../../services/common-data.service';
+import {TOP20} from '../../const/film.constants';
 
 @Component({
   selector: 'f-top20',
@@ -21,26 +22,25 @@ export class Top20Component implements OnInit, OnDestroy {
   trailers = Array<{ 'idIMDB': string, 'trailer': TrailerDataModel }>(0);
   moviesAll = Array<MovieDataModel>(0);
   moviesTop20 = Array<MovieDataModel>(0);
-  moviesTop20_length = 2;
   titles_moviesTop20 = Array<string>(0);
   alive = true;
+  private top20 = TOP20;
 
   constructor(private filmBackendService: FilmBackendService,
               private commonDataService: CommonDataService) {
   }
 
   ngOnInit() {
-    if (!(this.commonDataService.moviesTop20 && this.commonDataService.moviesTop20.length
-        && this.commonDataService.moviesAll && this.commonDataService.moviesAll.length
-        && this.commonDataService.titles_moviesTop20 && this.commonDataService.titles_moviesTop20.length)) {
+    if (!(this.commonDataService.moviesTop20.length
+        && this.commonDataService.moviesAll.length
+        && this.commonDataService.titles_moviesTop20.length)) {
       this.getListOfMoviesFunction();
     } else {
       this.moviesTop20 = this.commonDataService.moviesTop20;
       this.moviesAll = this.commonDataService.moviesAll;
       this.titles_moviesTop20 = this.commonDataService.titles_moviesTop20;
     }
-    if (!(this.commonDataService.titles_moviesTop20 && this.commonDataService.trailers
-        && this.commonDataService.titles_moviesTop20.length === this.commonDataService.trailers.length)) {
+    if (!(this.commonDataService.titles_moviesTop20.length === this.commonDataService.trailers.length)) {
       this.loadTrailers(this.titles_moviesTop20);
     } else {
       this.trailers = this.commonDataService.trailers;
@@ -63,11 +63,11 @@ export class Top20Component implements OnInit, OnDestroy {
           this.loading = false;
           this.loadingMessage = '';
           console.log(res);
-          this.moviesAll = <Array<MovieDataModel>>res.data.movies;
-          this.commonDataService.moviesAll = <Array<MovieDataModel>>res.data.movies;
+          this.moviesAll = (res.data && <Array<MovieDataModel>>res.data.movies) ? <Array<MovieDataModel>>res.data.movies : undefined;
+          this.commonDataService.moviesAll = this.moviesAll;
 
           const _moviesTop20 = this.moviesAll.filter((movie) => {
-              return movie.ranking <= this.moviesTop20_length;
+              return movie.ranking <= this.top20;
           });
           _moviesTop20.forEach((movie) => {
               movie.directors.forEach((director) => {
