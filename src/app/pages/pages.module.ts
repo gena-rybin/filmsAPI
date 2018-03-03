@@ -9,6 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TransformNameAsQueryParamPipe} from '../pipes/transform-name-as-query-param.pipe';
 import {DisplayArrayAsStringPipe} from '../pipes/display-array-as-string.pipe';
 import {ComponentsModule} from '../components/components.module';
+import { GraphicsComponent } from './graphics/graphics.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {ComponentsModule} from '../components/components.module';
     AboutComponent,
     DisplayArrayAsStringPipe,
     TransformNameAsQueryParamPipe,
+    GraphicsComponent,
 
   ],
   imports: [
@@ -32,7 +34,7 @@ import {ComponentsModule} from '../components/components.module';
     AboutComponent,
     DisplayArrayAsStringPipe,
     TransformNameAsQueryParamPipe,
-
+    GraphicsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
