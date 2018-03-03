@@ -6,6 +6,7 @@ import {TrailerDataModel} from '../../models/trailer-data.model';
 import {MovieDataModel} from '../../models/movie-data.model';
 import {toPromise} from 'rxjs/operator/toPromise';
 import {async} from '@angular/core/testing';
+import {CommonDataService} from '../../services/common-data.service';
 
 @Component({
   selector: 'f-top20',
@@ -23,12 +24,14 @@ export class Top20Component implements OnInit, OnDestroy {
   titles_moviesTop20 = Array<string>(0);
   alive = true;
 
-  constructor(private filmBackendService: FilmBackendService) {
+  constructor(private filmBackendService: FilmBackendService,
+              private commonDataService: CommonDataService) {
   }
 
   ngOnInit() {
-    this.getListOfMoviesFunction();
-
+    if (!(this.commonDataService.moviesTop20 && this.commonDataService.moviesTop20.length)) {
+      this.getListOfMoviesFunction();
+    }
   }
 
   ngOnDestroy() {
@@ -39,7 +42,7 @@ export class Top20Component implements OnInit, OnDestroy {
     this.loading = true;
     this.errorMessage = '';
     this.loadingMessage = 'Please wait, data loading...';
-    this.filmBackendService.getListOfFilms('1991', '2017')
+    this.filmBackendService.getListOfFilms('1900', '2017')
       .takeWhile(() => this.alive)
       .subscribe(
         (res: any) => {
@@ -57,6 +60,7 @@ export class Top20Component implements OnInit, OnDestroy {
               });
           });
           this.moviesTop20 = _moviesTop20;
+          this.commonDataService.moviesTop20 = this.moviesTop20;
           console.log(this.moviesTop20);
           this.moviesTop20.forEach((movie) => {
               this.titles_moviesTop20.push(movie.title.split(' ').join('%20'));

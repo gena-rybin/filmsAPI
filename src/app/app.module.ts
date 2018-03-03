@@ -9,6 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FilmBackendService} from './services/film-backend.service';
 import {FilmJsonpService} from './services/film-jsonp.service';
 import { ModalVideoComponent } from './components/modal-video/modal-video.component';
+import {CommonDataService} from './services/common-data.service';
 
 @NgModule({
   declarations: [],
@@ -22,7 +23,7 @@ import { ModalVideoComponent } from './components/modal-video/modal-video.compon
     FilmRoutingModule
   ],
   exports: [NgbModule],
-  providers: [FilmBackendService, FilmJsonpService],
+  providers: [FilmBackendService, FilmJsonpService, CommonDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
