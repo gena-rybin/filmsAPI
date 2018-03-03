@@ -10,12 +10,11 @@ export class FilmBackendService {
 
   constructor(private filmJsonpService: FilmJsonpService) { }
 
-  public getListOfFilms(startDate: string, endDate: string): Promise<any> {
+  public getListOfFilms(startDate: string, endDate: string): Observable<any> {
     const url = `http://api.myapifilms.com/imdb/top?start=` + startDate + `&end=`
                 + endDate + `&token=` + this.token + `&format=json&data=1`;
     console.log(url);
-    return this.filmJsonpService.getRequestUsingJSONP(url)
-      .toPromise();
+    return this.filmJsonpService.getRequestUsingJSONP(url);
   }
 
   public getTrailerOfFilm(title: string): Promise<any> {
