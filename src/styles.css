@@ -4,8 +4,8 @@ ngb-alert {
 
 .star-favorite {
   position: absolute;
-  bottom: 12px;
-  right: 50%;
+  top: 10px;
+  left: 25%;
   color: orange;
   font-size: 2rem;
   cursor: pointer;
@@ -16,8 +16,8 @@ ngb-alert {
 }
 .star-simple {
   position: absolute;
-  bottom: 12px;
-  right: 50%;
+  top: 10px;
+  left: 25%;
   color: dimgrey;
   font-size: 2rem;
   cursor: pointer;
@@ -35,4 +35,15 @@ table td {
 }
 .director:hover {
   color: darkorange;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 95%;
+  }
+}
+@media (min-width: 576px){
+  .container {
+    max-width: 95%;
+  }
 }

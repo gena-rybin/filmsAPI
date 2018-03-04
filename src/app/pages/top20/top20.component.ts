@@ -8,6 +8,7 @@ import {toPromise} from 'rxjs/operator/toPromise';
 import {async} from '@angular/core/testing';
 import {CommonDataService} from '../../services/common-data.service';
 import {TOP20} from '../../const/film.constants';
+import * as trailers from '../../const/trailers.json';
 
 @Component({
   selector: 'f-top20',
@@ -49,6 +50,7 @@ export class Top20Component implements OnInit, OnDestroy {
     } else {
       this.trailers = this.commonDataService.trailers;
     }
+    console.log(trailers);
   }
 
   ngOnDestroy() {
@@ -124,6 +126,8 @@ export class Top20Component implements OnInit, OnDestroy {
       }
     });
     this.commonDataService.trailers = this.trailers;
+    // localStorage.setItem('trailers', JSON.stringify(this.trailers));
+    // console.log(localStorage.getItem('trailers'));
     console.log(this.trailers);
   }
 

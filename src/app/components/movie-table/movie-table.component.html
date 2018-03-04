@@ -13,17 +13,17 @@
     </thead>
     <tbody>
     <tr *ngFor="let movie of moviesTop20; let i='index'">
-      <td class="text-center" style="max-width: 10%">
+      <td class="text-center" style="max-width: 10%; position: relative">
+        <span [ngClass]="{'star-favorite': isFavouriteMovie(movie.idIMDB),
+                            'star-simple': !isFavouriteMovie(movie.idIMDB)}"
+              (click)="toggleFavoriteMovie(movie.idIMDB)">&#x2605;</span>
         {{i+1}}
       </td>
       <td style="padding-top: 0.1rem; padding-bottom: 0.1rem; max-width: 10%">
         <img [attr.id]="'myimg_'+i" [attr.src]=movie.urlPoster style="height: 160px">
       </td>
-      <td class="text-left" style="max-width: 10%; position: relative">
+      <td class="text-left" style="max-width: 10%">
         {{movie.title}}
-        <span [ngClass]="{'star-favorite': isFavouriteMovie(movie.idIMDB),
-                            'star-simple': !isFavouriteMovie(movie.idIMDB)}"
-              (click)="toggleFavoriteMovie(movie.idIMDB)">&#x2605;</span>
       </td>
       <td class="text-center" style="max-width: 10%">
         {{movie.year}}
