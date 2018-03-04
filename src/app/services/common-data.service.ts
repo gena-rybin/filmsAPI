@@ -9,6 +9,8 @@ export class CommonDataService {
   private _moviesTop20 = Array<MovieDataModel>(0);
   private _titles_moviesTop20 = Array<string>(0);
   private _trailers = Array<{ 'idIMDB': string, 'trailer': TrailerDataModel }>(0);
+  _favoriteMovies = Array<MovieDataModel>(0);
+  _favoriteID = Array<string>(0);
 
   constructor() { }
 
@@ -47,5 +49,24 @@ export class CommonDataService {
   get trailers(): Array<{ 'idIMDB': string, 'trailer': TrailerDataModel }> {
     return this._trailers;
   }
+
+  set favoriteID(value: Array<string>) {
+    this._favoriteID = value;
+    console.log('---> favoriteID setted');
+  }
+
+  get favoriteID(): Array<string> {
+    return this._favoriteID;
+  }
+
+  set favoriteMovies(value: Array<MovieDataModel>) {
+    this._favoriteMovies = value;
+    console.log('---> avoriteMovies setted');
+  }
+
+  get favoriteMovies(): Array<MovieDataModel> {
+    return this._favoriteMovies;
+  }
+
 
 }
