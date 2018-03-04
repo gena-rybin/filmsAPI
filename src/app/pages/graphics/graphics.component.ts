@@ -14,8 +14,9 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = false;
   errorMessage = '';
   loadingMessage = '';
-  chart = [];
-  chartData = [];
+  chart = []; // : Chart;
+  chartData_labels = [];
+  chartData_data = [];
   moviesTop20 = Array<MovieDataModel>(0);
   moviesAll = Array<MovieDataModel>(0);
   titles_moviesTop20 = Array<string>(0);
@@ -26,34 +27,38 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
               private filmBackendService: FilmBackendService) { }
 
   ngOnInit() {
-    // if (this.commonDataService.moviesTop20.length) {
-    //   this.moviesTop20 = this.commonDataService.moviesTop20;
-    //   console.log(this.moviesTop20);
-    // } else {
-    //   this.getListOfMoviesFunction();
-    // }
-    this.prepareChartData([]);
+    if (this.commonDataService.moviesTop20.length) {
+      this.moviesTop20 = this.commonDataService.moviesTop20;
+      console.log('moviesTop20 exist');
+      setTimeout(_ => this.prepareChartData(this.moviesTop20));
+      // this.prepareChartData(this.moviesTop20);
+    } else {
+      this.getListOfMoviesFunction();
+    }
   }
 
   ngAfterViewInit() {
-    setTimeout(_ => this.runChart());
+    // setTimeout(_ => this.runChart());
   }
   ngOnDestroy() {
     this.alive = false;
   }
 
   public runChart() {
+    console.log('run runChart');
     const elem = document.getElementById('myChart');
 
     console.log(elem);
+    console.log(this.chartData_labels);
+    console.log(this.chartData_data);
 
     this.chart = new Chart(elem, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: this.chartData_labels,
         datasets: [{
           label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          data: this.chartData_data,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -83,6 +88,7 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     });
+    console.log(this.chart);
   }
 
   public getListOfMoviesFunction() {
@@ -93,7 +99,6 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
       .takeWhile(() => this.alive)
       .subscribe(
         (res: any) => {
-
           this.loading = false;
           this.loadingMessage = '';
           this.moviesAll = (res.data && <Array<MovieDataModel>>res.data.movies) ? <Array<MovieDataModel>>res.data.movies : undefined;
@@ -126,15 +131,15 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public prepareChartData(moviesTop20: Array<any>) {
-    // const years = [];
-
-    // moviesTop20.forEach((movie) => {
-    //   years.push(+movie.year);
-    // });
-    // years.sort((first, second) => {
-    //   return first - second;
-    // });
-    const years = [1934, 1957, 1966, 1972, 1974, 1975, 1977, 1980, 1990, 1993, 1994, 1994, 1994, 1999, 1999, 2001, 2002, 2003, 2008, 2010];
+    const years = [];
+    console.log('run prepareChartData');
+    moviesTop20.forEach((movie) => {
+      years.push(+movie.year);
+    });
+    years.sort((first, second) => {
+      return first - second;
+    });
+    // const years = [1934, 1957, 1966, 1972, 1974, 1975, 1977, 1980, 1990, 1993, 1994, 1994, 1994, 1999, 1999, 2001, 2002, 2003, 2008, 2010];
     const yMin = years['0'];
     const yMax = years[years.length - 1];
     const periodsStart = (Math.floor(yMin / 10)) * 10;
@@ -143,20 +148,18 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
     const chartData = [];
     let currentPeriodStart = periodsStart;
     let currentPeriodEnd = periodsStart + 9;
+
     for (let i = 0; i < length; i++) {
       const validYears = years.filter((year) => (year >= currentPeriodStart && year <= currentPeriodEnd));
       const period = '' + currentPeriodStart + '-' + currentPeriodEnd;
-      chartData.push({
-        period: period,
-        filmsCount: validYears.length
-      });
+      this.chartData_labels.push(period);
+      this.chartData_data.push(validYears.length);
       currentPeriodStart += 10;
       currentPeriodEnd += 10;
     }
-    this.chartData = chartData;
     console.log(years);
     console.log(periodsStart, yMin, yMax, periodsEnd);
-    console.log(this.chartData);
+    this.runChart();
   }
 
   public closeAlert() {

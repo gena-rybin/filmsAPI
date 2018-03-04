@@ -40,7 +40,7 @@ export class Top20Component implements OnInit, OnDestroy {
       this.moviesAll = this.commonDataService.moviesAll;
       this.titles_moviesTop20 = this.commonDataService.titles_moviesTop20;
     }
-    if (!(this.commonDataService.titles_moviesTop20.length === this.commonDataService.trailers.length)) {
+    if (!(this.commonDataService.trailers.length === this.top20)) {
       this.loadTrailers(this.titles_moviesTop20);
     } else {
       this.trailers = this.commonDataService.trailers;

@@ -2,11 +2,11 @@
 
 <ngb-alert *ngIf="errorMessage" type="danger" (close)="closeAlert()">{{ errorMessage }}</ngb-alert>
 <ngb-alert *ngIf="loadingMessage" type="success"  [dismissible]="false">{{ loadingMessage }}</ngb-alert>
-<ngb-alert *ngIf="!(errorMessage || loadingMessage)" type="light"  [dismissible]="false">
+<ngb-alert  type="light"  [dismissible]="false">
   <h3 style="color: #000000 !important">Graphics for top 20 movies:</h3>
 </ngb-alert>
 
 <div *ngIf="chart">
-  <canvas id="myChart" width="400" height="400">{{chart}}</canvas>
+  <canvas id="myChart" width="300" height="300">{{chart}}</canvas>
 </div>
 
