@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MovieDataModel} from '../../models/movie-data.model';
 import {CommonDataService} from '../../services/common-data.service';
+import {TrailerDataModel} from '../../models/trailer-data.model';
 
 @Component({
   selector: 'f-movie-table',
@@ -10,9 +11,14 @@ import {CommonDataService} from '../../services/common-data.service';
 export class MovieTableComponent implements OnInit {
   favoriteMovies = Array<MovieDataModel>(0);
   favoriteID = Array<string>(0);
+  moviesTop20: Array<MovieDataModel>;
 
-  @Input() moviesTop20: Array<MovieDataModel>;
+  @Input() set _moviesTop20(data: Array<MovieDataModel>) {
+    this.moviesTop20 = data;
+    console.log(this.moviesTop20);
+  }
   @Input() displayFullView: boolean;
+  @Input() trailers: Array<{ 'idIMDB': string, 'trailer': TrailerDataModel }>;
 
   constructor(private commonDataService: CommonDataService) { }
 

@@ -1,3 +1,11 @@
-<f-movie-table [moviesTop20]="moviesTop20"
+<f-movie-table [_moviesTop20]="commonDataService.favoriteMovies"
+               [trailers]="[]"
                [displayFullView]="false">
 </f-movie-table>
+
+<div *ngIf="commonDataService.favoriteMovies.length===0" class="container">
+  <div style="text-align:center; margin-top: 5%">
+    <h5>Your favorite list is empty.</h5>
+    <h4>Please, create it at previous page...</h4>
+  </div>
+</div>

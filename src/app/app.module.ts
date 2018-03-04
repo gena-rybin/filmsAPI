@@ -10,6 +10,7 @@ import {FilmBackendService} from './services/film-backend.service';
 import {FilmJsonpService} from './services/film-jsonp.service';
 import {CommonDataService} from './services/common-data.service';
 import {DisplayArrayAsStringPipe} from './pipes/display-array-as-string.pipe';
+import {Top20Guard} from './guards/top20-guard.service';
 
 @NgModule({
   declarations: [],
@@ -23,7 +24,11 @@ import {DisplayArrayAsStringPipe} from './pipes/display-array-as-string.pipe';
     FilmRoutingModule
   ],
   exports: [NgbModule],
-  providers: [FilmBackendService, FilmJsonpService, CommonDataService],
+  providers: [
+    FilmBackendService,
+    FilmJsonpService,
+    CommonDataService,
+    Top20Guard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

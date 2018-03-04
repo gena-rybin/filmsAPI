@@ -2,7 +2,7 @@
 
 <ngb-alert *ngIf="errorMessage" type="danger" (close)="closeAlert()">{{ errorMessage }}</ngb-alert>
 <ngb-alert *ngIf="loadingMessage" type="success"  [dismissible]="false">{{ loadingMessage }}</ngb-alert>
-<ngb-alert  type="light"  [dismissible]="false">
+<ngb-alert *ngIf="moviesTop20.length === top20" type="light"  [dismissible]="false">
   <h3 style="color: #000000 !important">Graphics for top 20 movies:</h3>
 </ngb-alert>
 

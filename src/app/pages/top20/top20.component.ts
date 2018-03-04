@@ -33,16 +33,18 @@ export class Top20Component implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (!(this.commonDataService.moviesTop20.length
-        && this.commonDataService.moviesAll.length
-        && this.commonDataService.titles_moviesTop20.length)) {
+    if (!(this.commonDataService.moviesTop20.length === this.top20
+        && this.commonDataService.moviesAll.length === this.top20
+        && this.commonDataService.titles_moviesTop20.length === this.top20)) {
       this.getListOfMoviesFunction();
     } else {
       this.moviesTop20 = this.commonDataService.moviesTop20;
       this.moviesAll = this.commonDataService.moviesAll;
       this.titles_moviesTop20 = this.commonDataService.titles_moviesTop20;
+      console.log(this.moviesTop20);
     }
-    if (!(this.commonDataService.trailers.length === this.top20)) {
+    if (!(this.commonDataService.trailers.length === this.top20)
+        && (this.titles_moviesTop20.length === this.top20)) {
       this.loadTrailers(this.titles_moviesTop20);
     } else {
       this.trailers = this.commonDataService.trailers;
@@ -65,27 +67,36 @@ export class Top20Component implements OnInit, OnDestroy {
           this.loading = false;
           this.loadingMessage = '';
           console.log(res);
-          this.moviesAll = (res.data && <Array<MovieDataModel>>res.data.movies) ? <Array<MovieDataModel>>res.data.movies : undefined;
-          this.commonDataService.moviesAll = this.moviesAll;
+          if (res.data && res.data.movies) {
+            this.moviesAll = (res.data && <Array<MovieDataModel>>res.data.movies) ? <Array<MovieDataModel>>res.data.movies : undefined;
+            this.commonDataService.moviesAll = this.moviesAll;
 
-          const _moviesTop20 = this.moviesAll.filter((movie) => {
+            const _moviesTop20 = this.moviesAll.filter((movie) => {
               return movie.ranking <= this.top20;
-          });
-          _moviesTop20.forEach((movie) => {
+            });
+            _moviesTop20.forEach((movie) => {
               movie.directors.forEach((director) => {
                 director.sanitizeDirectorUrl = 'https://www.imdb.com/find?q=' + director.name.split(' ').join('%20') + '&s=nm&ref_=fn_nm';
               });
-          });
-          this.moviesTop20 = _moviesTop20;
-          this.commonDataService.moviesTop20 = this.moviesTop20;
-          console.log(this.moviesTop20);
-          this.moviesTop20.forEach((movie) => {
+            });
+            this.moviesTop20 = _moviesTop20;
+            this.commonDataService.moviesTop20 = this.moviesTop20;
+            console.log(this.moviesTop20);
+            this.moviesTop20.forEach((movie) => {
               this.titles_moviesTop20.push(movie.title.split(' ').join('%20'));
-          });
-          this.commonDataService.titles_moviesTop20 = this.titles_moviesTop20;
-          console.log(this.titles_moviesTop20);
+            });
+            this.commonDataService.titles_moviesTop20 = this.titles_moviesTop20;
+            console.log(this.titles_moviesTop20);
 
-          this.loadTrailers(this.titles_moviesTop20);
+            this.loadTrailers(this.titles_moviesTop20);
+          } else {
+            this.errorMessage = 'Sorry... ' + res.error.message;
+            this.moviesTop20 = [];
+            this.trailers = [];
+            this.commonDataService.moviesTop20 = [];
+            this.commonDataService.trailers = [];
+            this.commonDataService.moviesAll = [];
+          }
         },
         (res: any) => {
           this.loading = false;

@@ -17,10 +17,10 @@
         {{i+1}}
       </td>
       <td style="padding-top: 0.1rem; padding-bottom: 0.1rem; max-width: 10%">
-        <img [attr.id]="'myimg_'+i" [attr.src]=movie.urlPoster>
+        <img [attr.id]="'myimg_'+i" [attr.src]=movie.urlPoster style="height: 160px">
       </td>
       <td class="text-left" style="max-width: 10%; position: relative">
-        {{movie.title}}<br>
+        {{movie.title}}
         <span [ngClass]="{'star-favorite': isFavouriteMovie(movie.idIMDB),
                             'star-simple': !isFavouriteMovie(movie.idIMDB)}"
               (click)="toggleFavoriteMovie(movie.idIMDB)">&#x2605;</span>

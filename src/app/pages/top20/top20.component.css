@@ -1,6 +1,4 @@
-table td {
-  vertical-align: middle;
-}
+
 div.panel-options{
   position: relative;
   /*padding: .75rem 1.25rem;*/
@@ -11,9 +9,4 @@ div.panel-options{
 .alert-light{
   color: #000000 !important;
 }
-.director {
-  cursor: pointer;
-}
-.director:hover {
-  color: darkorange;
-}
+

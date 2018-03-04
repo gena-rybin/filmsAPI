@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MovieDataModel} from '../../models/movie-data.model';
+import {CommonDataService} from '../../services/common-data.service';
 
 @Component({
   selector: 'f-favorite',
@@ -9,14 +10,12 @@ import {MovieDataModel} from '../../models/movie-data.model';
 export class FavoriteComponent implements OnInit {
   moviesTop20 = Array<MovieDataModel>(0);
   favoriteMovies = Array<MovieDataModel>(0);
-  // favoriteID = Array<string>(0);
 
-  constructor() { }
+  constructor(public commonDataService: CommonDataService) { }
 
   ngOnInit() {
-    // this.favoriteID = JSON.parse(localStorage.getItem('favoriteID'));
-    this.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies'));
-    this.moviesTop20 = this.favoriteMovies;
+    this.commonDataService.favoriteID = JSON.parse(localStorage.getItem('favoriteID'));
+    this.commonDataService.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies'));
   }
 
 }

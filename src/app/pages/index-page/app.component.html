@@ -11,7 +11,8 @@
   <li><button [routerLink]="['/favorite']" class="btn btn-default btn-outline-primary"
               routerLinkActive="active" type="button">favorite</button></li>
   <li><button [routerLink]="['/graphics']" class="btn btn-default btn-outline-primary"
-              routerLinkActive="active" type="button">graphics</button></li>
+              routerLinkActive="active" type="button"
+              [disabled]="commonDataService.moviesTop20.length<1">graphics</button></li>
   <li><button [routerLink]="['/about']" class="btn btn-default btn-outline-primary"
               routerLinkActive="active" type="button">about</button></li>
 </ul>

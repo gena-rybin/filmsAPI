@@ -3,9 +3,9 @@ ngb-alert {
 }
 
 .star-favorite {
-  position: relative;
-  top: 20px;
-  left: 28%;
+  position: absolute;
+  bottom: 12px;
+  right: 50%;
   color: orange;
   font-size: 2rem;
   cursor: pointer;
@@ -15,9 +15,9 @@ ngb-alert {
   -moz-transform: scale3d(1.0, 1.0, 1.0);
 }
 .star-simple {
-  position: relative;
-  top: 20px;
-  left: 28%;
+  position: absolute;
+  bottom: 12px;
+  right: 50%;
   color: dimgrey;
   font-size: 2rem;
   cursor: pointer;
@@ -26,4 +26,13 @@ ngb-alert {
   -webkit-transform: scale3d(1.0, 1.0, 1.0);
   -moz-transform: scale3d(1.0, 1.0, 1.0);
 
+}
+table td {
+  vertical-align: middle !important;
+}
+.director {
+  cursor: pointer;
+}
+.director:hover {
+  color: darkorange;
 }

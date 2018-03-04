@@ -21,7 +21,7 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
   moviesAll = Array<MovieDataModel>(0);
   titles_moviesTop20 = Array<string>(0);
   alive = true;
-  private top20 = TOP20;
+  public top20 = TOP20;
 
   constructor(private commonDataService: CommonDataService,
               private filmBackendService: FilmBackendService) { }
@@ -79,12 +79,10 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
         }]
       },
       options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
+        legend: {
+          labels: {
+            defaultFontSize: 26
+          }
         }
       }
     });
