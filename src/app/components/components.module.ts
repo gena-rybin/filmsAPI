@@ -5,11 +5,15 @@ import {FilmRoutingModule} from '../services/film-routing.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ModalVideoComponent} from './modal-video/modal-video.component';
 import {SafeVideoPipe} from '../pipes/safe-video.pipe';
+import { MovieTableComponent } from './movie-table/movie-table.component';
+import {DisplayArrayAsStringPipe} from '../pipes/display-array-as-string.pipe';
 
 @NgModule({
   declarations: [
     ModalVideoComponent,
-    SafeVideoPipe
+    SafeVideoPipe,
+    DisplayArrayAsStringPipe,
+    MovieTableComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import {SafeVideoPipe} from '../pipes/safe-video.pipe';
   ],
   exports: [
     ModalVideoComponent,
-    SafeVideoPipe
+    SafeVideoPipe,
+    MovieTableComponent,
+    DisplayArrayAsStringPipe
   ],
   providers: [],
   bootstrap: []

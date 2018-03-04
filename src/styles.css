@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+ngb-alert {
+  white-space: normal;
+}
+
+.star-favorite {
+  position: relative;
+  top: 20px;
+  left: 28%;
+  color: orange;
+  font-size: 2rem;
+  cursor: pointer;
+  display: inline-block;
+  transform: scale3d(1.0, 1.0, 1.0);
+  -webkit-transform: scale3d(1.0, 1.0, 1.0);
+  -moz-transform: scale3d(1.0, 1.0, 1.0);
+}
+.star-simple {
+  position: relative;
+  top: 20px;
+  left: 28%;
+  color: dimgrey;
+  font-size: 2rem;
+  cursor: pointer;
+  display: inline-block;
+  transform: scale3d(1.0, 1.0, 1.0);
+  -webkit-transform: scale3d(1.0, 1.0, 1.0);
+  -moz-transform: scale3d(1.0, 1.0, 1.0);
+
+}

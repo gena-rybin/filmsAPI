@@ -33,9 +33,6 @@ export class Top20Component implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.favoriteID = JSON.parse(localStorage.getItem('favoriteID'));
-    this.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies'));
-
     if (!(this.commonDataService.moviesTop20.length
         && this.commonDataService.moviesAll.length
         && this.commonDataService.titles_moviesTop20.length)) {
@@ -121,36 +118,6 @@ export class Top20Component implements OnInit, OnDestroy {
 
   public openInNewWindow(url: string) {
     window.open(url, '_blank');
-  }
-
-  public isFavouriteMovie(idIMDB: string): boolean {
-    return (this.favoriteID.indexOf(idIMDB) !== -1);
-   }
-
-  toggleFavoriteMovie(idIMDB: string) {
-    if (this.isFavouriteMovie(idIMDB)) {
-      const i = this.favoriteID.indexOf(idIMDB);
-      console.log(i);
-      this.favoriteID.splice(i, 1);
-      this.favoriteMovies.splice(i, 1);
-      this.saveFavouriteToLocalStorage();
-    } else {
-      this.favoriteID.push(idIMDB);
-      this.moviesTop20.forEach((movie, i) => {
-        if (movie.idIMDB === idIMDB) {
-          this.favoriteMovies.push(movie);
-        }
-      });
-      this.saveFavouriteToLocalStorage();
-    }
-  }
-  saveFavouriteToLocalStorage() {
-    this.commonDataService.favoriteID = this.favoriteID;
-    this.commonDataService.favoriteMovies = this.favoriteMovies;
-    localStorage.removeItem('favoriteID');
-    localStorage.removeItem('favoriteMovies');
-    localStorage.setItem('favoriteID', JSON.stringify(this.favoriteID));
-    localStorage.setItem('favoriteMovies', JSON.stringify(this.favoriteMovies));
   }
 
   public closeAlert() {

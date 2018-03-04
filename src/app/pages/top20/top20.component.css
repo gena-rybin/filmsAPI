@@ -17,26 +17,3 @@ div.panel-options{
 .director:hover {
   color: darkorange;
 }
-ngb-alert {
-  white-space: normal;
-}
-
-.star-favorite {
-  color: orange;
-  font-size: 2rem;
-  cursor: pointer;
-  display: inline-block;
-  transform: scale3d(1.0, 1.0, 1.0);
-  -webkit-transform: scale3d(1.0, 1.0, 1.0);
-  -moz-transform: scale3d(1.0, 1.0, 1.0);
-}
-.star-simple {
-  color: dimgrey;
-  font-size: 2rem;
-  cursor: pointer;
-  display: inline-block;
-  transform: scale3d(1.0, 1.0, 1.0);
-  -webkit-transform: scale3d(1.0, 1.0, 1.0);
-  -moz-transform: scale3d(1.0, 1.0, 1.0);
-
-}

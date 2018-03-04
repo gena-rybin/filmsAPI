@@ -1,0 +1,76 @@
+<div class="table-responsive">
+  <table class="table table-striped" *ngIf="moviesTop20 && moviesTop20.length">
+    <thead>
+    <tr>
+      <th class="text-center" colspan="3" style="max-width: 30%">Name</th>
+      <th class="text-center" style="max-width: 10%">Year</th>
+      <th class="text-center" style="max-width: 10%">Rating</th>
+      <th class="text-center" style="max-width: 10%">Genres</th>
+      <th class="text-center" style="max-width: 10%">Country</th>
+      <th *ngIf="displayFullView" class="text-center" style="max-width: 10%">Director</th>
+      <th *ngIf="displayFullView" class="text-center" style="max-width: 10%">Trailers</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let movie of moviesTop20; let i='index'">
+      <td class="text-center" style="max-width: 10%">
+        {{i+1}}
+      </td>
+      <td style="padding-top: 0.1rem; padding-bottom: 0.1rem; max-width: 10%">
+        <img [attr.id]="'myimg_'+i" [attr.src]=movie.urlPoster>
+      </td>
+      <td class="text-left" style="max-width: 10%; position: relative">
+        {{movie.title}}<br>
+        <span [ngClass]="{'star-favorite': isFavouriteMovie(movie.idIMDB),
+                            'star-simple': !isFavouriteMovie(movie.idIMDB)}"
+              (click)="toggleFavoriteMovie(movie.idIMDB)">&#x2605;</span>
+      </td>
+      <td class="text-center" style="max-width: 10%">
+        {{movie.year}}
+      </td>
+      <td class="text-center" style="max-width: 10%">
+        {{movie.rating}} <span style="color: #a9a9a9">/ 10</span>
+      </td>
+      <td class="text-center" style="max-width: 10%">
+        {{movie.genres | displayArrayAsStringWithComa}}
+      </td>
+      <td class="text-center" style="max-width: 10%">
+        {{movie.countries | displayArrayAsStringWithComa}}
+      </td>
+      <td *ngIf="displayFullView" class="text-center" style="max-width: 10%">
+        <ng-container *ngFor="let director of movie.directors">
+          <a class="director" href="javascript:void(0);" (click)="openInNewWindow(director.sanitizeDirectorUrl)">
+            {{director.name}}
+          </a>
+        </ng-container>
+      </td>
+      <td *ngIf="displayFullView" class="text-center" style="max-width: 10%">
+        <img *ngIf="!(trailers.length > 0)" style="top: 48%; left: 48%" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        <div *ngIf="trailers.length > 0">
+          <f-modal-video [filmName]="movie.title"
+                         [trailer]="(trailers[i]).trailer">
+          </f-modal-video>
+        </div>
+
+      </td>
+
+
+      <!--description :  "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. "-->
+      <!--duration : "2:11"-->
+      <!--qualities : Array(5)-->
+      <!--0 : {quality: "480p", videoURL: "https://video-http.media-imdb.com/MV5BODlhNjU1YjQt…JmdotpgY8Igi4ps_&Key-Pair-Id=APKAILW5I44IHKUN2DYA"}-->
+      <!--1 : {quality: "SD", videoURL: "https://video-http.media-imdb.com/MV5BNmMwNDVkYzgt…9s8uIgLjPgomWcc_&Key-Pair-Id=APKAILW5I44IHKUN2DYA"}-->
+      <!--2 : {quality: "SD", videoURL: "https://video-http.media-imdb.com/MV5BMGQzZGEyYTQt…3oQAJa0jmpVNahg_&Key-Pair-Id=APKAILW5I44IHKUN2DYA"}-->
+      <!--3 : {quality: "SD", videoURL: "https://video-http.media-imdb.com/MV5BYjE0YjMxOTgt…mMLwmCliDtJ2qgo_&Key-Pair-Id=APKAILW5I44IHKUN2DYA"}-->
+      <!--4 : {quality: "SD", videoURL: "https://video-http.media-imdb.com/MV5BZGNjZjgyMDMt…uRHHR~9n~mQG2Kw_&Key-Pair-Id=APKAILW5I44IHKUN2DYA"}-->
+      <!--title : "Official Trailer"-->
+      <!--videoURL : "/videoplayer/vi3877612057"-->
+
+      <!--<td>-->
+      <!--<div [innerHTML]="film.embed"></div>-->
+      <!--</td>-->
+    </tr>
+    </tbody>
+  </table>
+
+</div>

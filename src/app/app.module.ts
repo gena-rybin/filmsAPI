@@ -8,8 +8,8 @@ import {AppComponent} from './pages/index-page/app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FilmBackendService} from './services/film-backend.service';
 import {FilmJsonpService} from './services/film-jsonp.service';
-import { ModalVideoComponent } from './components/modal-video/modal-video.component';
 import {CommonDataService} from './services/common-data.service';
+import {DisplayArrayAsStringPipe} from './pipes/display-array-as-string.pipe';
 
 @NgModule({
   declarations: [],
