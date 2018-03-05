@@ -45,12 +45,8 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public runChart() {
-    console.log('run runChart');
     const elem = document.getElementById('myChart');
-
-    console.log(elem);
-    console.log(this.chartData_labels);
-    console.log(this.chartData_data);
+    // console.log(elem);
 
     this.chart = new Chart(elem, {
       type: 'bar',
@@ -93,7 +89,7 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     });
-    console.log(this.chart);
+    // console.log(this.chart);
   }
 
   public getListOfMoviesFunction() {
@@ -144,13 +140,11 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
     years.sort((first, second) => {
       return first - second;
     });
-    // const years = [1934, 1957, 1966, 1972, 1974, 1975, 1977, 1980, 1990, 1993, 1994, 1994, 1994, 1999, 1999, 2001, 2002, 2003, 2008, 2010];
     const yMin = years['0'];
     const yMax = years[years.length - 1];
     const periodsStart = (Math.floor(yMin / 10)) * 10;
     const periodsEnd = ((Math.floor((yMax) / 10 ) + 1) * 10);
     const length = (periodsEnd - periodsStart) / 10;
-    const chartData = [];
     let currentPeriodStart = periodsStart;
     let currentPeriodEnd = periodsStart + 9;
 
@@ -162,8 +156,8 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
       currentPeriodStart += 10;
       currentPeriodEnd += 10;
     }
-    console.log(years);
-    console.log(periodsStart, yMin, yMax, periodsEnd);
+    // console.log(years);
+    // console.log(periodsStart, yMin, yMax, periodsEnd);
     this.runChart();
   }
 

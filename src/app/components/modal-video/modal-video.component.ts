@@ -14,7 +14,7 @@ export class ModalVideoComponent implements OnInit {
   @Input() filmName: string;
   @Input() set trailer(data: TrailerDataModel) {
     this._trailer = data;
-    console.log(this._trailer);
+    // console.log(this._trailer);
   }
 
   constructor(private modalService: NgbModal) {}
@@ -33,7 +33,7 @@ export class ModalVideoComponent implements OnInit {
 
   setVideoUrl(i: number) {
     this.videoURL = this._trailer.qualities[i].videoURL;
-    console.log(i);
+    // console.log(i);
   }
 
   private getDismissReason(reason: any): string {

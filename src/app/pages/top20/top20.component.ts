@@ -1,11 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
 import {FilmBackendService} from '../../services/film-backend.service';
 import 'rxjs/add/operator/takeWhile';
 import {TrailerDataModel} from '../../models/trailer-data.model';
 import {MovieDataModel} from '../../models/movie-data.model';
-import {toPromise} from 'rxjs/operator/toPromise';
-import {async} from '@angular/core/testing';
 import {CommonDataService} from '../../services/common-data.service';
 import {TOP20} from '../../const/film.constants';
 import * as trailersJSON from '../../const/trailers.json';
@@ -40,17 +37,17 @@ export class Top20Component implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(trailersJSON);
+    // console.log(trailersJSON);
     this._trailers = trailersJSON;
     if (!(this.commonDataService.moviesTop20.length === this.top20
-        && this.commonDataService.moviesAll.length === this.top20
+        && this.commonDataService.moviesAll.length
         && this.commonDataService.titles_moviesTop20.length === this.top20)) {
       this.getListOfMoviesFunction();
     } else {
       this.moviesTop20 = this.commonDataService.moviesTop20;
       this.moviesAll = this.commonDataService.moviesAll;
       this.titles_moviesTop20 = this.commonDataService.titles_moviesTop20;
-      console.log(this.moviesTop20);
+      // console.log(this.moviesTop20);
     }
     if (!(this.commonDataService.trailers.length === this.top20)
         && (this.titles_moviesTop20.length === this.top20)) {
@@ -65,7 +62,7 @@ export class Top20Component implements OnInit, OnDestroy {
   }
 
   public trailersSourceChanged() {
-    console.log(this.trailers_source);
+    // console.log(this.trailers_source);
     switch (this.trailers_source) {
       case 'json':
         this.trailers = [];
@@ -96,7 +93,7 @@ export class Top20Component implements OnInit, OnDestroy {
 
           this.loading = false;
           this.loadingMessage = '';
-          console.log(res);
+          // console.log(res);
           if (res.data && res.data.movies) {
             this.moviesAll = (res.data && <Array<MovieDataModel>>res.data.movies) ? <Array<MovieDataModel>>res.data.movies : undefined;
             this.commonDataService.moviesAll = this.moviesAll;
@@ -116,7 +113,7 @@ export class Top20Component implements OnInit, OnDestroy {
               this.titles_moviesTop20.push(movie.title.split(' ').join('%20'));
             });
             this.commonDataService.titles_moviesTop20 = this.titles_moviesTop20;
-            console.log(this.titles_moviesTop20);
+            // console.log(this.titles_moviesTop20);
 
             this.trailersSourceChanged();
           } else {
@@ -132,7 +129,7 @@ export class Top20Component implements OnInit, OnDestroy {
           this.loading = false;
           this.loadingMessage = '';
           this.errorMessage = 'There are server problems... ' + res.message;
-          console.log(res);
+          // console.log(res);
         });
   }
 
@@ -150,12 +147,9 @@ export class Top20Component implements OnInit, OnDestroy {
           idIMDB: this.moviesTop20[i].idIMDB,
           trailer: result.data.movies['0'].trailer
         });
-        // trailer: result.trailer.data.movies['0']
       }
     });
     this.commonDataService.trailers = this.trailers;
-    // localStorage.setItem('trailers', JSON.stringify(this.trailers));
-    // console.log(localStorage.getItem('trailers'));
     console.log(this.trailers);
   }
 
