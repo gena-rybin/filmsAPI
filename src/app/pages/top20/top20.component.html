@@ -4,7 +4,20 @@
 <ngb-alert *ngIf="loadingMessage" type="success"  [dismissible]="false">{{ loadingMessage }}</ngb-alert>
 <ngb-alert *ngIf="!(errorMessage || loadingMessage)" type="light"  [dismissible]="false">
   <h3 style="color: #000000 !important">Top 20 movies:</h3>
+
+  <span class="float-right" style="position: relative; bottom: 30px">Trailer links are loaded from:
+      <span *ngFor="let radio_v of radio_values" class="text-center">
+        <label for="radio_{{radio_v.value}}">
+          <input type="radio" name="'trailers_radio'" id="radio_{{radio_v.value}}"
+                 [(ngModel)]="trailers_source" [value]="radio_v.value"
+                 (change)="trailersSourceChanged()" required>
+          {{radio_v.description}}
+        </label>
+      </span>
+  </span>
+
 </ngb-alert>
+
 
 <f-movie-table [_moviesTop20]="moviesTop20"
                [trailers]="trailers"

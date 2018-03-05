@@ -8,7 +8,7 @@ import {toPromise} from 'rxjs/operator/toPromise';
 import {async} from '@angular/core/testing';
 import {CommonDataService} from '../../services/common-data.service';
 import {TOP20} from '../../const/film.constants';
-import * as trailers from '../../const/trailers.json';
+import * as trailersJSON from '../../const/trailers.json';
 
 @Component({
   selector: 'f-top20',
@@ -19,13 +19,19 @@ export class Top20Component implements OnInit, OnDestroy {
   loading = false;
   errorMessage = '';
   loadingMessage = '';
-  trailer: any;
+  // trailer: any;
   trailers = Array<{ 'idIMDB': string, 'trailer': TrailerDataModel }>(0);
+  _trailers: any;
   moviesAll = Array<MovieDataModel>(0);
   moviesTop20 = Array<MovieDataModel>(0);
   favoriteMovies = Array<MovieDataModel>(0);
   favoriteID = Array<string>(0);
   titles_moviesTop20 = Array<string>(0);
+  radio_values = [
+    { value: 'json', description: 'json' },
+    { value: 'server', description: 'server' }
+  ];
+  trailers_source = 'json';
   alive = true;
   private top20 = TOP20;
 
@@ -34,6 +40,8 @@ export class Top20Component implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(trailersJSON);
+    this._trailers = trailersJSON;
     if (!(this.commonDataService.moviesTop20.length === this.top20
         && this.commonDataService.moviesAll.length === this.top20
         && this.commonDataService.titles_moviesTop20.length === this.top20)) {
@@ -46,15 +54,35 @@ export class Top20Component implements OnInit, OnDestroy {
     }
     if (!(this.commonDataService.trailers.length === this.top20)
         && (this.titles_moviesTop20.length === this.top20)) {
-      this.loadTrailers(this.titles_moviesTop20);
+      this.trailersSourceChanged();
     } else {
       this.trailers = this.commonDataService.trailers;
     }
-    console.log(trailers);
   }
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  public trailersSourceChanged() {
+    console.log(this.trailers_source);
+    switch (this.trailers_source) {
+      case 'json':
+        this.trailers = [];
+        this.moviesTop20.forEach((movie, i) => {
+          const trailerArray = this._trailers.filter((trailer) => {
+            return trailer.idIMDB === movie.idIMDB;
+          });
+          this.trailers.push(trailerArray['0']);
+        });
+        break;
+      case 'server':
+        this.trailers = [];
+        this.loadTrailers(this.titles_moviesTop20);
+        break;
+      default:
+        break;
+    }
   }
 
   public getListOfMoviesFunction() {
@@ -90,7 +118,7 @@ export class Top20Component implements OnInit, OnDestroy {
             this.commonDataService.titles_moviesTop20 = this.titles_moviesTop20;
             console.log(this.titles_moviesTop20);
 
-            this.loadTrailers(this.titles_moviesTop20);
+            this.trailersSourceChanged();
           } else {
             this.errorMessage = 'Sorry... ' + res.error.message;
             this.moviesTop20 = [];

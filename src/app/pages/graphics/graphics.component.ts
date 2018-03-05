@@ -79,6 +79,13 @@ export class GraphicsComponent implements OnInit, AfterViewInit, OnDestroy {
         }]
       },
       options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
         legend: {
           labels: {
             defaultFontSize: 26

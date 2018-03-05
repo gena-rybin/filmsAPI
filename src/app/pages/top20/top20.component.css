@@ -9,4 +9,10 @@ div.panel-options{
 .alert-light{
   color: #000000 !important;
 }
-
+label,
+label>input{
+  cursor: pointer;
+}
+label:hover{
+  color: darkorange;
+}
