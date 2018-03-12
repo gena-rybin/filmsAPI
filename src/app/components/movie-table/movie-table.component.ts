@@ -23,12 +23,12 @@ export class MovieTableComponent implements OnInit {
   constructor(private commonDataService: CommonDataService) { }
 
   ngOnInit() {
-    this.favoriteID = JSON.parse(localStorage.getItem('favoriteID'));
-    this.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies'));
+    this.favoriteID = JSON.parse(localStorage.getItem('favoriteID')) || [];
+    this.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies')) || [];
   }
 
   public isFavouriteMovie(idIMDB: string): boolean {
-    return (this.favoriteID.indexOf(idIMDB) !== -1);
+    return (this.favoriteID) ? (this.favoriteID.indexOf(idIMDB) !== -1) : false;
   }
 
   toggleFavoriteMovie(idIMDB: string) {
@@ -56,4 +56,9 @@ export class MovieTableComponent implements OnInit {
     localStorage.setItem('favoriteID', JSON.stringify(this.favoriteID));
     localStorage.setItem('favoriteMovies', JSON.stringify(this.favoriteMovies));
   }
+
+  public openInNewWindow(url: string) {
+    window.open(url, '_blank');
+  }
+
 }

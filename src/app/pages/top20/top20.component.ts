@@ -150,11 +150,7 @@ export class Top20Component implements OnInit, OnDestroy {
       }
     });
     this.commonDataService.trailers = this.trailers;
-    console.log(this.trailers);
-  }
-
-  public openInNewWindow(url: string) {
-    window.open(url, '_blank');
+    console.log(JSON.stringify(this.trailers));
   }
 
   public closeAlert() {
